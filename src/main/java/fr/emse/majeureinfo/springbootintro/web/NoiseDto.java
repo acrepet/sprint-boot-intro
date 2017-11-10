@@ -1,18 +1,18 @@
 package fr.emse.majeureinfo.springbootintro.web;
 
-import fr.emse.majeureinfo.springbootintro.model.Light;
+import fr.emse.majeureinfo.springbootintro.model.Noise;
 import fr.emse.majeureinfo.springbootintro.model.Status;
 
-public class LightDTO {
+public class NoiseDto {
 
     private final Long id;
     private final Integer level;
     private final Status status;
 
-    public LightDTO(Light light) {
-        this.id = light.getId();
-        this.level = light.getLevel();
-        this.status = light.getStatus();
+    public NoiseDto(Noise noise) {
+        this.id = noise.getId();
+        this.level = noise.getLevel();
+        this.status = noise.getStatus();
     }
 
     public Long getId() {

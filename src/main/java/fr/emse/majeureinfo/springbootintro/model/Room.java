@@ -57,7 +57,21 @@ public class Room {
         this.noise = noise;
     }
 
-    public String getContext() {
-        return "Light: " + Integer.valueOf(light.getLevel()) + "Noise: " + Integer.valueOf(noise.getLevel());
+    public void switchLight() {
+        if (getLight().getStatus().compareTo(Status.ON) == 0)
+            getLight().setStatus(Status.OFF);
+        if (getLight().getStatus().compareTo(Status.OFF) == 0)
+            getLight().setStatus(Status.ON);
     }
+
+
+    public void switchRinger() {
+        if (getNoise().getStatus().compareTo(Status.ON) == 0)
+            getNoise().setStatus(Status.OFF);
+        if (getNoise().getStatus().compareTo(Status.OFF) == 0)
+            getNoise().setStatus(Status.ON);
+    }
+
+
+
 }

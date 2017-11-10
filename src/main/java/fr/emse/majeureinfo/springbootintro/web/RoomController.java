@@ -1,9 +1,9 @@
 package fr.emse.majeureinfo.springbootintro.web;
 
-import fr.emse.majeureinfo.springbootintro.dao.LightDao;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import fr.emse.majeureinfo.springbootintro.dao.RoomDao;
+import fr.emse.majeureinfo.springbootintro.model.Room;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -14,16 +14,39 @@ import java.util.stream.Collectors;
 @Transactional
 public class RoomController {
 
-    private final LightDao lightDao;
+    private final RoomDao roomDao;
 
 
-    public RoomController(LightDao lightDao) {
-        this.lightDao = lightDao;
+    public RoomController(RoomDao roomDao) {
+        this.roomDao = roomDao;
     }
 
     @GetMapping
-    public List<LightDTO> list() {
-        return lightDao.findAll().stream().map(LightDTO::new).collect(Collectors.toList());
+    public List<RoomDto> list() {
+        return roomDao.findAll().stream().map(RoomDto::new).collect(Collectors.toList());
     }
 
+    @GetMapping(value={"/{roomId}", "/{roomId}/context"})
+    public RoomDto get(@PathVariable("roomId") Long roomId) {
+        return new RoomDto(checkIfRoomExists(roomId));
+    }
+
+    @PutMapping("/{roomId}/switch-light")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void switchLight(@PathVariable("roomId") Long roomId) {
+        checkIfRoomExists(roomId).switchLight();
+    }
+
+    @PutMapping("/{roomId}/switch-ringer")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void switchRinger(@PathVariable("roomId") Long roomId) {
+        checkIfRoomExists(roomId).switchRinger();
+    }
+
+    private Room checkIfRoomExists(Long roomId){
+        if (roomId == null) throw new NotFoundException("Room ID must not be null");
+        Room room = roomDao.findOne(roomId);
+        if (room == null) throw new NotFoundException("No room with ID " + roomId);
+        return room;
+    }
 }
