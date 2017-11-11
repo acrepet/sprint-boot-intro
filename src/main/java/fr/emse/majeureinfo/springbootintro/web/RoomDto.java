@@ -1,6 +1,7 @@
 package fr.emse.majeureinfo.springbootintro.web;
 
 import fr.emse.majeureinfo.springbootintro.model.Room;
+import fr.emse.majeureinfo.springbootintro.model.Status;
 
 public class RoomDto {
 
@@ -25,4 +26,5 @@ public class RoomDto {
     public NoiseDto getNoise() {
         return noise;
     }
+
 }

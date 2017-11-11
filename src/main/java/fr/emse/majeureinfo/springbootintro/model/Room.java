@@ -58,18 +58,22 @@ public class Room {
     }
 
     public void switchLight() {
-        if (getLight().getStatus().compareTo(Status.ON) == 0)
+        if (getLight().getStatus() == Status.ON){
             getLight().setStatus(Status.OFF);
-        if (getLight().getStatus().compareTo(Status.OFF) == 0)
+        }
+        else {
             getLight().setStatus(Status.ON);
+        }
     }
 
 
     public void switchRinger() {
-        if (getNoise().getStatus().compareTo(Status.ON) == 0)
+        if (getNoise().getStatus() == Status.ON) {
             getNoise().setStatus(Status.OFF);
-        if (getNoise().getStatus().compareTo(Status.OFF) == 0)
+        }
+        else {
             getNoise().setStatus(Status.ON);
+        }
     }
 
 

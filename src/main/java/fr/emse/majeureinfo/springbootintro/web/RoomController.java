@@ -31,16 +31,20 @@ public class RoomController {
         return new RoomDto(checkIfRoomExists(roomId));
     }
 
-    @PutMapping("/{roomId}/switch-light")
+    @PostMapping("/{roomId}/switch-light")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void switchLight(@PathVariable("roomId") Long roomId) {
-        checkIfRoomExists(roomId).switchLight();
+        Room room = checkIfRoomExists(roomId);
+        room.switchLight();
+        this.roomDao.save(room);
     }
 
-    @PutMapping("/{roomId}/switch-ringer")
+    @PostMapping("/{roomId}/switch-ringer")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void switchRinger(@PathVariable("roomId") Long roomId) {
-        checkIfRoomExists(roomId).switchRinger();
+        Room room = checkIfRoomExists(roomId);
+        room.switchRinger();
+        this.roomDao.save(room);
     }
 
     private Room checkIfRoomExists(Long roomId){
