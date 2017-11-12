@@ -31,20 +31,22 @@ public class RoomController {
         return new RoomDto(checkIfRoomExists(roomId));
     }
 
-    @PostMapping("/{roomId}/switch-light")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void switchLight(@PathVariable("roomId") Long roomId) {
+    @PostMapping("/{roomId}/switch-light-and-list")
+    @ResponseStatus(HttpStatus.OK)
+    public List<RoomDto> switchLightAndList(@PathVariable("roomId") Long roomId) {
         Room room = checkIfRoomExists(roomId);
         room.switchLight();
         this.roomDao.save(room);
+        return this.list();
     }
 
-    @PostMapping("/{roomId}/switch-ringer")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void switchRinger(@PathVariable("roomId") Long roomId) {
+    @PostMapping("/{roomId}/switch-ringer-and-list")
+    @ResponseStatus(HttpStatus.OK)
+    public List<RoomDto> switchRingerAndList(@PathVariable("roomId") Long roomId) {
         Room room = checkIfRoomExists(roomId);
         room.switchRinger();
         this.roomDao.save(room);
+        return this.list();
     }
 
     private Room checkIfRoomExists(Long roomId){
