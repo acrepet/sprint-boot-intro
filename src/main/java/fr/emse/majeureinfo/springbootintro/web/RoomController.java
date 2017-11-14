@@ -34,22 +34,29 @@ public class RoomController {
         return new RoomDto(checkIfRoomExists(roomId));
     }
 
-    @PostMapping("/{roomId}/switch-light-and-list")
+    @PutMapping("/{roomId}/switch-light-and-list")
     @ResponseStatus(HttpStatus.OK)
     public List<RoomDto> switchLightAndList(@PathVariable("roomId") Long roomId) {
         Room room = checkIfRoomExists(roomId);
         room.switchLight();
-        this.roomDao.save(room);
         return this.list();
     }
 
-    @PostMapping("/{roomId}/switch-ringer-and-list")
+    @PutMapping("/{roomId}/switch-ringer-and-list")
     @ResponseStatus(HttpStatus.OK)
     public List<RoomDto> switchRingerAndList(@PathVariable("roomId") Long roomId) {
         Room room = checkIfRoomExists(roomId);
         room.switchRinger();
-        this.roomDao.save(room);
         return this.list();
+    }
+
+
+    @GetMapping(value={"/list-with-on-light"})
+    public List<RoomDto> listWithOnLight(){
+        return roomDao.findWithOnLights()
+                .stream()
+                .map(RoomDto::new)
+                .collect(Collectors.toList());
     }
 
     private Room checkIfRoomExists(Long roomId){
