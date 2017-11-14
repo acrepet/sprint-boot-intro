@@ -57,6 +57,9 @@ public class Room {
         this.noise = noise;
     }
 
+    /*
+    switchLight
+     */
     public void switchLight() {
         if (getLight().getStatus() == Status.ON){
             getLight().setStatus(Status.OFF);

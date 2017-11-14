@@ -23,10 +23,13 @@ public class RoomController {
 
     @GetMapping
     public List<RoomDto> list() {
-        return roomDao.findAll().stream().map(RoomDto::new).collect(Collectors.toList());
+        return roomDao.findAll()
+                .stream()
+                .map(RoomDto::new)
+                .collect(Collectors.toList());
     }
 
-    @GetMapping(value={"/{roomId}", "/{roomId}/context"})
+    @GetMapping(value={"/{roomId}","/{roomId}/context"})
     public RoomDto get(@PathVariable("roomId") Long roomId) {
         return new RoomDto(checkIfRoomExists(roomId));
     }
