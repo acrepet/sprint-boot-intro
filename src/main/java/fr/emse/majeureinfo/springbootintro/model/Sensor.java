@@ -4,25 +4,16 @@ import javax.persistence.*;
 
 @Entity
 @SuppressWarnings("serial")
-@Table(name="LIGHT")
-public class Light {
+public class Sensor {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
-    private Integer level;
+    private Integer signal;
 
-    @Enumerated(EnumType.STRING)
     private Status status;
 
-    @SuppressWarnings("unused")
-    public Light() {
-    }
-
-    public Light(Integer level, Status status) {
-        this.level = level;
+    public Sensor(Integer signal, Status status) {
+        this.signal = signal;
         this.status = status;
     }
 
@@ -36,13 +27,12 @@ public class Light {
         this.id = id;
     }
 
-
-    public Integer getLevel() {
-        return level;
+    public Integer getSignal() {
+        return signal;
     }
 
-    public void setLevel(Integer level) {
-        this.level = level;
+    public void setSignal(Integer signal) {
+        this.signal = signal;
     }
 
     public Status getStatus() {

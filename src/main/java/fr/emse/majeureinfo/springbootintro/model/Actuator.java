@@ -4,24 +4,16 @@ import javax.persistence.*;
 
 @Entity
 @SuppressWarnings("serial")
-@Table(name = "NOISE")
-public class Noise {
-    @Id
-    @GeneratedValue
+public class Actuator {
+
     private Long id;
 
-    @Column(nullable = false)
-    private Integer level;
+    private Integer speed;
 
-    @Enumerated(EnumType.STRING)
     private Status status;
 
-    @SuppressWarnings("unused")
-    public Noise() {
-    }
-
-    public Noise(Integer level, Status status) {
-        this.level = level;
+    public Actuator(Integer speed, Status status) {
+        this.speed = speed;
         this.status = status;
     }
 
@@ -35,12 +27,12 @@ public class Noise {
     }
 
 
-    public Integer getLevel() {
-        return level;
+    public Integer getSpeed() {
+        return speed;
     }
 
-    public void setLevel(Integer level) {
-        this.level = level;
+    public void setSpeed(Integer speed) {
+        this.speed = speed;
     }
 
     public Status getStatus() {

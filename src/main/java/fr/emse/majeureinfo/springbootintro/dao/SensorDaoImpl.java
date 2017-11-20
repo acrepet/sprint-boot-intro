@@ -1,6 +1,6 @@
 package fr.emse.majeureinfo.springbootintro.dao;
 
-import fr.emse.majeureinfo.springbootintro.model.Light;
+import fr.emse.majeureinfo.springbootintro.model.Sensor;
 import fr.emse.majeureinfo.springbootintro.model.Status;
 
 import javax.persistence.EntityManager;
@@ -9,18 +9,18 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * Implementation of {@link LightDaoCustom}
+ * Implementation of {@link SensorDaoCustom}
  *
  * @author A Crepet
  */
-public class LightDaoImpl implements LightDaoCustom {
+public class SensorDaoImpl implements SensorDaoCustom {
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    public List<Light> findOnLights() {
-        String jpql = "select lt from Light lt where lt.status = :value";
-        TypedQuery<Light> query = em.createQuery(jpql, Light.class);
+    public List<Sensor> findOnSensors() {
+        String jpql = "select lt from Sensor lt where lt.status = :value";
+        TypedQuery<Sensor> query = em.createQuery(jpql, Sensor.class);
         return query.setParameter("value", Status.ON)
                 .getResultList();
     }

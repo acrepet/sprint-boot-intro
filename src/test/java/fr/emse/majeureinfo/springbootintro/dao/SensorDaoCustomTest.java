@@ -7,6 +7,7 @@ import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import com.ninja_squad.dbsetup.operation.DeleteAll;
 import com.ninja_squad.dbsetup.operation.Insert;
 import com.ninja_squad.dbsetup.operation.Operation;
+
 import fr.emse.majeureinfo.springbootintro.model.Status;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,10 +28,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource("/test.properties")
-public class RoomDaoCustomTest {
+public class SensorDaoCustomTest {
 
-    @Autowired
-    private RoomDao roomDao;
+
+    private SensorDao sensorDao;
 
 
     @Qualifier("dataSource")
@@ -39,46 +40,24 @@ public class RoomDaoCustomTest {
 
     protected static final DbSetupTracker TRACKER = new DbSetupTracker();
 
-    private static final Operation DELETE_ALL = DeleteAll.from("ROOM","LIGHT","NOISE");
-
-    protected void dbSetup(Operation operation) {
-        DbSetup setup = new DbSetup(new DataSourceDestination(dataSource),
-                Operations.sequenceOf(DELETE_ALL, operation));
-        TRACKER.launchIfNecessary(setup);
+     protected void dbSetup(Operation operation) {
     }
 
     @Before
     public void prepare() {
-        Operation light1 =
-                Insert.into("LIGHT")
+        Operation light =
+                Insert.into("SENSOR")
                         .withDefaultValue("status", Status.ON)
-                        .columns("id", "level")
+                        .columns("id", "speed")
                         .values(1L, 22)
                         .build();
-        Operation light2 =
-                Insert.into("LIGHT")
-                        .withDefaultValue("status", Status.OFF)
-                        .columns("id", "level")
-                        .values(2L, 22)
-                        .build();
-        Operation noise =
-                Insert.into("NOISE")
-                        .withDefaultValue("status", Status.OFF)
-                        .columns("id", "level")
-                        .values(1L, 22)
-                        .build();
-        Operation room =
-                Insert.into("ROOM")
-                        .columns("id", "light_id", "noise_id")
-                        .values(1L,1L, 1L)
-                        .build();
-        dbSetup(Operations.sequenceOf(light1,light2,noise,room));
+        dbSetup(light);
     }
 
     @Test
-    public void shouldFindOnLights() {
+    public void shouldFindOnSensors() {
         TRACKER.skipNextLaunch();
-        assertThat(roomDao.findWithOnLights()).hasSize(1);
+        assertThat(sensorDao.findOnSensors()).hasSize(1);
     }
 
 
