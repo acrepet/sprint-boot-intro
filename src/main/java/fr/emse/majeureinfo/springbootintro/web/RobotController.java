@@ -33,7 +33,7 @@ public class RobotController {
 
     @PutMapping("/switch-sensor-and-list")
     @ResponseStatus(HttpStatus.OK)
-    public List<RobotDto> switchLightAndList(@PathVariable("robotId") Long robotId) {
+    public List<RobotDto> switchSensorAndList(@PathVariable("robotId") Long robotId) {
         Robot robot = checkIfRobotExists(robotId);
         robot.switchSensor();
         return this.list();

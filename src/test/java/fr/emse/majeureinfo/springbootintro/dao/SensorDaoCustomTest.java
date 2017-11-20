@@ -45,13 +45,13 @@ public class SensorDaoCustomTest {
 
     @Before
     public void prepare() {
-        Operation light =
+        Operation sensor =
                 Insert.into("SENSOR")
                         .withDefaultValue("status", Status.ON)
                         .columns("id", "speed")
                         .values(1L, 22)
                         .build();
-        dbSetup(light);
+        dbSetup(sensor);
     }
 
     @Test
