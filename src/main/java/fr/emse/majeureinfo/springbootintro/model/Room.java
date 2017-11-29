@@ -1,6 +1,7 @@
 package fr.emse.majeureinfo.springbootintro.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @SuppressWarnings("serial")
@@ -14,7 +15,7 @@ public class Room {
     /**
      * The Light of a room
      */
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Light light;
 
     /**
@@ -23,13 +24,22 @@ public class Room {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Noise noise;
 
+
+    /**
+     * The Building of a room
+     */
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Building building;
+
     @SuppressWarnings("unused")
     public Room() {
     }
 
-    public Room(Light light, Noise noise) {
+    public Room(Light light, Noise noise, Building building) {
         this.light = light;
         this.noise = noise;
+        this.building = building;
     }
 
 
@@ -57,11 +67,20 @@ public class Room {
         this.noise = noise;
     }
 
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
+
     public void switchLight() {
-        if (getLight().getStatus() == Status.ON){
+        if (getLight().getStatus() == Status.ON) {
             getLight().setStatus(Status.OFF);
-        }
-        else {
+        } else {
             getLight().setStatus(Status.ON);
         }
     }
@@ -70,12 +89,10 @@ public class Room {
     public void switchRinger() {
         if (getNoise().getStatus() == Status.ON) {
             getNoise().setStatus(Status.OFF);
-        }
-        else {
+        } else {
             getNoise().setStatus(Status.ON);
         }
     }
-
 
 
 }
