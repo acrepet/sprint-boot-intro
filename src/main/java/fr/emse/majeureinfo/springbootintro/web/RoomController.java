@@ -31,7 +31,7 @@ public class RoomController {
         return new RoomDto(checkIfRoomExists(roomId));
     }
 
-    @PostMapping("/{roomId}/switch-light-and-list")
+    @PutMapping("/{roomId}/switch-light-and-list")
     @ResponseStatus(HttpStatus.OK)
     public List<RoomDto> switchLightAndList(@PathVariable("roomId") Long roomId) {
         Room room = checkIfRoomExists(roomId);
@@ -40,7 +40,7 @@ public class RoomController {
         return this.list();
     }
 
-    @PostMapping("/{roomId}/switch-ringer-and-list")
+    @PutMapping("/{roomId}/switch-ringer-and-list")
     @ResponseStatus(HttpStatus.OK)
     public List<RoomDto> switchRingerAndList(@PathVariable("roomId") Long roomId) {
         Room room = checkIfRoomExists(roomId);
